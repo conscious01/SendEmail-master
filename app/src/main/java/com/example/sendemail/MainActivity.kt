@@ -61,8 +61,7 @@ class MainActivity : AppCompatActivity() {
         initListener()
 
         //需要在 Application 的 onCreate() 中调用一次 DaemonEnv.initialize()
-        DaemonEnv.initialize(this, TraceServiceImpl::class.java, DaemonEnv.DEFAULT_WAKE_UP_INTERVAL)
-        TraceServiceImpl.sShouldStopService = false
+
         DaemonEnv.startServiceMayBind(TraceServiceImpl::class.java)
     }
 
@@ -71,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-//        checkStatus()
+        checkStatus()
     }
 
     private fun checkStatus() {
@@ -114,7 +113,6 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         EventBus.getDefault().unregister(this)
-
     }
 
     /**
@@ -124,7 +122,7 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener {
 //            changeEmailAddress()
 
-            senddata()
+//            senddata()
 
         }
 
@@ -154,7 +152,7 @@ class MainActivity : AppCompatActivity() {
      * 初始化视图，读取sp
      */
     private fun initView() {
-        email.setText(sharedPreferences.getString(SP_ADDRESS, ""))
+        email.setText(sharedPreferences.getString(SP_ADDRESS, "激活码700123"))
     }
 
     /**

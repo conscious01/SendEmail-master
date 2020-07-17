@@ -6,7 +6,7 @@ package net.api;
  */
 public class ApiConstants {
 
-    public static final String VERSION_CONTROL = "control.json";
+    public static final String VERSION_CONTROL = "control_2.json";
 
 
 }
