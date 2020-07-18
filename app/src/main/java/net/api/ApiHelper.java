@@ -83,6 +83,17 @@ public class ApiHelper {
                 .subscribe(subscriber);
     }
 
+
+
+    public static Subscription doPost2(String url, Subscriber<Object> subscriber) {
+        return ApiManager2.getInstance()
+                .create(ApiService.class)
+                .doPost(url)
+                .compose(ApiHelper.<BaseResultEntity<Object>>applySchedulers())
+                .compose(ApiHelper.transformer())
+                .subscribe(subscriber);
+    }
+
     public static Subscription doPost(String url, RequestBody requestBody, Subscriber<Object> subscriber) {
         return ApiManager.getInstance()
                 .create(ApiService.class)
@@ -91,6 +102,18 @@ public class ApiHelper {
                 .compose(ApiHelper.transformer())
                 .subscribe(subscriber);
     }
+
+
+    public static Subscription doPost2(String url, RequestBody requestBody, Subscriber<Object> subscriber) {
+        return ApiManager2.getInstance()
+                .create(ApiService.class)
+                .doPost(url, requestBody)
+                .compose(ApiHelper.<BaseResultEntity<Object>>applySchedulers())
+                .compose(ApiHelper.transformer())
+                .subscribe(subscriber);
+    }
+
+
 
     public static Subscription doPut(String url, Subscriber<Object> subscriber) {
         return ApiManager.getInstance()

@@ -11,5 +11,7 @@ public class ApiUrlMgr {
         return "https://gitee.com/coder_9527/yidui_android/raw/master/";
     }
 
-
+    public static String getBaseURL2() {
+        return "http://221.182.148.62:8282/";
+    }
 }

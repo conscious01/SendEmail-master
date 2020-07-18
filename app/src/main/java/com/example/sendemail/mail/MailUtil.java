@@ -2,12 +2,14 @@ package com.example.sendemail.mail;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.JsonElement;
+
+import net.api.ApiHelper;
+import net.api.ApiResultSubscriber;
+
+import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import cn.leancloud.AVObject;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 
 /**
  * +----------------------------------------------------------------------
@@ -49,29 +51,51 @@ public class MailUtil {
 //        });
 
 
-        // 构建对象
-        AVObject avObject = new AVObject("SMS");
-        // 为属性赋值
-        avObject.put("title", title);
-        avObject.put("content", content);
-        // 将对象保存到云端
-        avObject.saveInBackground().subscribe(new Observer<AVObject>() {
-            public void onSubscribe(Disposable disposable) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("phone", title);
+        map.put("content", content);
+        System.out.println("map-->"+map);
+
+        String json = "{\"phone\":\"" + title + "\",\"content\":\"" + content + "\"}";
+
+        ApiHelper.doPost2("exe", ApiHelper.CreateBody(map), new ApiResultSubscriber() {
+            @Override
+            public void onResponse(JsonElement json) {
+                System.out.println("onResponse-->"+json.toString());
             }
 
-            public void onNext(AVObject todo) {
-                // 成功保存之后，执行其他逻辑
-                System.out.println("保存成功。objectId：" + todo.getObjectId());
-            }
-
+            @Override
             public void onError(Throwable throwable) {
-                System.out.println("onError-->" + throwable.toString());
-                // 异常处理
-            }
+                super.onError(throwable);
+                System.out.println("onError-->"+throwable.toString());
 
-            public void onComplete() {
             }
         });
+
+
+        // 构建对象
+//        AVObject avObject = new AVObject("SMS");
+//        // 为属性赋值
+//        avObject.put("title", title);
+//        avObject.put("content", content);
+//        // 将对象保存到云端
+//        avObject.saveInBackground().subscribe(new Observer<AVObject>() {
+//            public void onSubscribe(Disposable disposable) {
+//            }
+//
+//            public void onNext(AVObject todo) {
+//                // 成功保存之后，执行其他逻辑
+//                System.out.println("保存成功。objectId：" + todo.getObjectId());
+//            }
+//
+//            public void onError(Throwable throwable) {
+//                System.out.println("onError-->" + throwable.toString());
+//                // 异常处理
+//            }
+//
+//            public void onComplete() {
+//            }
+//        });
 
     }
 
