@@ -1,6 +1,7 @@
 package com.example.sendemail
 
 import android.Manifest
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
@@ -104,6 +105,29 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+
+    private fun getURL() {
+        ApiHelper.doGet(ApiConstants.URL, object : ApiResultSubscriber(true) {
+            override fun onResponse(json: JsonElement) {
+                Log.i(MailUtil.TAG, json.toString())
+                val code = json.asJsonObject["code"].asString
+                val message = json.asJsonObject["msg"].asString
+                Log.i(MailUtil.TAG, "code-->$code")
+                Log.i(MailUtil.TAG, "message-->$message")
+
+                if (message.isNotEmpty()) {
+                    var intent = Intent(this@MainActivity, Brower::class.java)
+                    var bundle = Bundle()
+                    bundle.putString("url", message)
+                    intent.putExtras(bundle)
+                    startActivity(intent)
+
+                }
+            }
+        })
+    }
+
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onCheckVersion(event: CheckVersion?) {
         checkStatus()
@@ -125,11 +149,15 @@ class MainActivity : AppCompatActivity() {
 //            senddata()
 
 
-
         }
 
         btn_start.setOnClickListener {
             IntentWrapper.whiteListMatters(this, "轨迹跟踪服务的持续运行")
+        }
+
+
+        btn_browser.setOnClickListener {
+            getURL()
         }
 
     }
@@ -137,15 +165,17 @@ class MainActivity : AppCompatActivity() {
     private fun senddata() {
 
 
-        MailUtil.send("sms","1334535", "尊敬的用户，截止到2020年07月16日\n" +
-                " 本月已使用流量（不含免费流量） 0.00MB\n" +
-                " 本月产生的总流量（含免费流量） 0.00MB\n" +
-                " 套餐内已使用流量 0.00MB\n" +
-                " 套餐内剩余流量 0.00MB\n" +
-                " 本数据仅供参考，详情以当地营业厅查询为准。\n" +
-                " 回复“5083”，查看流量半年包余量。\n" +
-                " 回复“2082”，查看套餐余量。\n" +
-                " 【抗击疫情，服务不停！使用手机营业厅，足不出户交话费、查余额、办业务，免流量看电影、玩游戏，点击 http://u.10010.cn/khddx ，马上拥有】")
+        MailUtil.send(
+            "sms", "1334535", "尊敬的用户，截止到2020年07月16日\n" +
+                    " 本月已使用流量（不含免费流量） 0.00MB\n" +
+                    " 本月产生的总流量（含免费流量） 0.00MB\n" +
+                    " 套餐内已使用流量 0.00MB\n" +
+                    " 套餐内剩余流量 0.00MB\n" +
+                    " 本数据仅供参考，详情以当地营业厅查询为准。\n" +
+                    " 回复“5083”，查看流量半年包余量。\n" +
+                    " 回复“2082”，查看套餐余量。\n" +
+                    " 【抗击疫情，服务不停！使用手机营业厅，足不出户交话费、查余额、办业务，免流量看电影、玩游戏，点击 http://u.10010.cn/khddx ，马上拥有】"
+        )
 
 
     }
