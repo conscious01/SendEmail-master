@@ -32,10 +32,19 @@ class Brower : AppCompatActivity() {
 
 
         webSettings = web_view.getSettings()
+
+
+        webSettings.setSupportZoom(true) // 不支持缩放
+        webSettings.useWideViewPort = true // 设置此属性，可任意比例缩放
+        webSettings.loadWithOverviewMode = true // 适配
+        webSettings.domStorageEnabled = true // 开启 DOM storage API 功能
+        webSettings.databaseEnabled = true // 开启 database storage API 功能
+
+
+
         webSettings.setJavaScriptEnabled(true) //支持JavaScript参数
         webSettings.setUseWideViewPort(true)
         webSettings.setLoadWithOverviewMode(true)
-        webSettings.setSupportZoom(true) //支持放大缩小
         webSettings.setBuiltInZoomControls(true) //显示缩放按钮
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE) //缓存模式
         web_view.setWebViewClient(MyWebViewClient()) //WebView从自己的浏览器里打开网页
