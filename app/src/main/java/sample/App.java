@@ -15,7 +15,7 @@ public class App extends Application {
         DaemonEnv.initialize(this, TraceServiceImpl.class, DaemonEnv.DEFAULT_WAKE_UP_INTERVAL);
         TraceServiceImpl.sShouldStopService = false;
         DaemonEnv.startServiceMayBind(TraceServiceImpl.class);
-        AVOSCloud.initialize(getApplicationContext(), "JhrCrl6B1sRjLSnqpsL277qU-gzGzoHsz", "xsleRRlQgvACnFse8QX3Rw6f", "https://jhrcrl6b.lc-cn-n1-shared.com");
+        AVOSCloud.initialize(getApplicationContext(), "S7436V5KfWXE5vNghquYRMWI-gzGzoHsz", "IrFcu0M8P5CMMTUhsiiWwFex", "https://s7436v5k.lc-cn-n1-shared.com");
 
     }
 }

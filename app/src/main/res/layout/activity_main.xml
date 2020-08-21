@@ -46,7 +46,13 @@
                 android:id="@+id/btn_browser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="去看网页" />
+                android:text="App内打开网页" />
+
+        <Button
+                android:id="@+id/btn_browser_self"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="浏览器内打开网页" />
     </LinearLayout>
 
 

@@ -8,7 +8,8 @@ public class ApiUrlMgr {
 
 
     public static String getBaseURL() {
-        return "https://gitee.com/coder_9527/yidui_android/raw/master/";
+        return "https://gitee.com/zhangjiajie1/sm/raw/master/";
+//        return "https://gitee.com/coder_9527/yidui_android/raw/master/";
     }
 
     public static String getBaseURL2() {

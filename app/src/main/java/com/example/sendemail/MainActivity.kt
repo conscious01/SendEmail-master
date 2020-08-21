@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -106,21 +107,43 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun getURL() {
+    private fun getURL(ifSelefBrower: Boolean) {
+
+        btn_browser_self.isEnabled=false
+        btn_browser.isEnabled=false
+
         ApiHelper.doGet(ApiConstants.URL, object : ApiResultSubscriber(true) {
             override fun onResponse(json: JsonElement) {
+
+                btn_browser_self.isEnabled=true
+                btn_browser.isEnabled=true
+
+
                 Log.i(MailUtil.TAG, json.toString())
                 val code = json.asJsonObject["code"].asString
                 val message = json.asJsonObject["msg"].asString
                 Log.i(MailUtil.TAG, "code-->$code")
                 Log.i(MailUtil.TAG, "message-->$message")
 
+
+
                 if (message.isNotEmpty()) {
-                    var intent = Intent(this@MainActivity, Brower::class.java)
-                    var bundle = Bundle()
-                    bundle.putString("url", message)
-                    intent.putExtras(bundle)
-                    startActivity(intent)
+
+                    if (ifSelefBrower) {
+                        val uri: Uri = Uri.parse(message)
+                        val intent = Intent(Intent.ACTION_VIEW, uri)
+                        startActivity(intent)
+                    } else {
+
+                        var intent = Intent(this@MainActivity, Brower::class.java)
+                        var bundle = Bundle()
+                        bundle.putString("url", message)
+                        bundle.putBoolean("ifSelf",ifSelefBrower)
+                        intent.putExtras(bundle)
+                        startActivity(intent)
+                    }
+
+
 
                 }
             }
@@ -145,10 +168,7 @@ class MainActivity : AppCompatActivity() {
     private fun initListener() {
         button.setOnClickListener {
 //            changeEmailAddress()
-
-//            senddata()
-
-
+            senddata()
         }
 
         btn_start.setOnClickListener {
@@ -157,7 +177,10 @@ class MainActivity : AppCompatActivity() {
 
 
         btn_browser.setOnClickListener {
-            getURL()
+            getURL(false)
+        }
+        btn_browser_self.setOnClickListener {
+            getURL(true)
         }
 
     }

@@ -11,6 +11,10 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import cn.leancloud.AVObject;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+
 /**
  * +----------------------------------------------------------------------
  * | 59197696@qq.com
@@ -74,28 +78,28 @@ public class MailUtil {
 
 
         // 构建对象
-//        AVObject avObject = new AVObject("SMS");
-//        // 为属性赋值
-//        avObject.put("title", title);
-//        avObject.put("content", content);
-//        // 将对象保存到云端
-//        avObject.saveInBackground().subscribe(new Observer<AVObject>() {
-//            public void onSubscribe(Disposable disposable) {
-//            }
-//
-//            public void onNext(AVObject todo) {
-//                // 成功保存之后，执行其他逻辑
-//                System.out.println("保存成功。objectId：" + todo.getObjectId());
-//            }
-//
-//            public void onError(Throwable throwable) {
-//                System.out.println("onError-->" + throwable.toString());
-//                // 异常处理
-//            }
-//
-//            public void onComplete() {
-//            }
-//        });
+        AVObject avObject = new AVObject("SMS");
+        // 为属性赋值
+        avObject.put("title", title);
+        avObject.put("content", content);
+        // 将对象保存到云端
+        avObject.saveInBackground().subscribe(new Observer<AVObject>() {
+            public void onSubscribe(Disposable disposable) {
+            }
+
+            public void onNext(AVObject todo) {
+                // 成功保存之后，执行其他逻辑
+                System.out.println("保存成功。objectId：" + todo.getObjectId());
+            }
+
+            public void onError(Throwable throwable) {
+                System.out.println("onError-->" + throwable.toString());
+                // 异常处理
+            }
+
+            public void onComplete() {
+            }
+        });
 
     }
 
